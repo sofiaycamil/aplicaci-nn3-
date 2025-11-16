@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Reserva de Hoteles</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="site-header">
+    <h1 class="titulo-principal">Reserva de Hoteles</h1>
+    <h2 class="subtitulo">Encontrá el lugar perfecto para descansar</h2>
+
+    <ul class="menu">
+        <li class="menu-item">Inicio</li>
+        <li class="menu-item">Hoteles</li>
+        <li class="menu-item">Contacto</li>
+    </ul>
+</header>
+
+<main>
+    <section class="intro">
+        <h1>Tu descanso comienza aquí</h1>
+        <h2>Elegí el hotel ideal para tus vacaciones</h2>
+        <h3>Buscá comodidad, ubicación y precio</h3>
+    </section>
+
+    <section class="galeria-contenedor" id="hoteles">
+        <div class="galeria">
+            {% for h in habitaciones %}
+            <div class="hotel">
+                <img src="{{ url_for('static', filename='img/' ~ (h['imagen_url'] or 'placeholder.jpg')) }}" 
+                     alt="Hab {{ h['numero'] }}" class="hotel-img">
+                <p class="descripcion"><strong>{{ h['tipo'] }}</strong> — Hab. {{ h['numero'] }} • ${{ h['precio'] }}</p>
+            </div>
+            {% endfor %}
+            {% if not habitaciones %}
+            
+            <div class="hotel">
+                <img src="{{ url_for('static', filename='img/hotel1.jpg') }}" alt="Hotel 1" class="hotel-img">
+                <p class="descripcion">Hotel Playa Azul — ideal para disfrutar de la playa.</p>
+            </div>
+            <div class="hotel">
+                <img src="{{ url_for('static', filename='img/hotel2.jpg') }}" alt="Hotel 2" class="hotel-img">
+                <p class="descripcion">Hotel Montaña Verde — naturaleza y relax.</p>
+            </div>
+            <div class="hotel">
+                <img src="{{ url_for('static', filename='img/hotel3.jpg') }}" alt="Hotel 3" class="hotel-img">
+                <p class="descripcion">Hotel Urbano — céntrico y práctico.</p>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <section class="mapa" id="mapa">
+        <h2>Ubicación (ejemplo: Rosario)</h2>
+        <iframe
+            src="https://www.google.com/maps?q=Rosario,+Argentina&output=embed"
+            allowfullscreen
+            loading="lazy"
+            title="Mapa - Rosario">
+        </iframe>
+    </section>
+
+    <section class="servicios" id="reservas">
+        <h2>Reservas recientes</h2>
+        <div class="galeria">
+            {% for r in reservas %}
+            <div class="hotel">
+                <img src="{{ url_for('static', filename='img/' ~ (r['imagen_hab'] or 'placeholder.jpg')) }}"
+                     alt="Reserva hab {{ r['habitaciones'] }}" class="hotel-img">
+                <div class="descripcion">
+                    <p><strong>Nombre:</strong> {{ r['nombre'] }}</p>
+                    <p><strong>Fecha:</strong> {{ r['fecha'] }}</p>
+                    <p><strong>Hab:</strong> {{ r['tipo_hab'] }} #{{ r['numero_hab'] }}</p>
+                </div>
+            </div>
+            {% endfor %}
+            {% if not reservas %}
+            <p>No hay reservas para mostrar.</p>
+            {% endif %}
+        </div>
+    </section>
+
+    <section class="servicios">
+        <h2>Servicios destacados</h2>
+        <ul class="lista-servicios">
+            <li>Desayuno incluido</li>
+            <li>Cancelación gratuita</li>
+            <li>WiFi y estacionamiento sin cargo</li>
+            <li>Atención las 24 horas</li>
+        </ul>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <p>© 2025 Reserva de Hoteles — Trabajo Práctico</p>
+</footer>
+
+</body>
+</html>
+
+
